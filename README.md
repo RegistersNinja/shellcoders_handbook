@@ -2,6 +2,7 @@
 - [Notes on Part 1 (ch 1-5)](#notes-on-part-1-ch-1-5)
   - [Ch 1](#ch-1)
   - [Ch 2](#ch-2)
+  - [Ch 3](#ch-3)
 
 # Introduction
 In this repo I host my notes for The **Shellcoder's Handbook: Discovering and Exploiting Security Holes**. It can be purchased from here for example: https://www.wiley.com/en-us/The+Shellcoder's+Handbook%3A+Discovering+and+Exploiting+Security+Holes%2C+2nd+Edition-p-9781118079126#downloadstab-section
@@ -49,6 +50,12 @@ Notes from Sam:
 3. disable ASLR with this command: sudo echo 0 > /proc/sys/kernel/randomize_va_space
 4. I was able to reproduce some of the demonstrations in a VM, but modern OS and compilers (gcc) are good at detecting stack overflows. Modern mitigation includes Stack Canaries, ASLR, PAC on ARM (although recently was also found to be vulnerable, see here: https://arxiv.org/pdf/2406.08719).
 
-Notes from "Smashing the Stack For Fun and Profit" by Aleph One:
-You can download the paper from here: https://inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf.
+Notes from "Smashing the Stack For Fun and Profit" by Aleph One - The overflow chapter:
+1. You can download the paper from here: https://inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf.
+2. To conduct the overflow in a controlled manner (and not just corruption) you have to calculate the offset correctly. It's not that difficult in simple programs, but becomes increasingly harder. Here is a little diagram for example3.c:
+   ![smash-the-stack](ret_smashing-the-stack.png)
 
+The idea is simple: calculate the offset from the buffer you are overflowing until you reach the return address. This includes the relevant local variables (note they are *word sized) + the base pointer. Then you can modify the return address directly.
+Using the same principle, you can just corrupt the return address, but in that case not a lot of caution required (bunch of As' as an example).
+
+## Ch 3
