@@ -53,6 +53,8 @@ Notes from Sam:
 Notes from "Smashing the Stack For Fun and Profit" by Aleph One - The overflow chapter:
 1. You can download the paper from here: https://inst.eecs.berkeley.edu/~cs161/fa08/papers/stack_smashing.pdf.
 2. To conduct the overflow in a controlled manner (and not just corruption) you have to calculate the offset correctly. It's not that difficult in simple programs, but becomes increasingly harder. Here is a little diagram for example3.c:
+   
+   
    ![smash-the-stack](ret_smashing-the-stack.png)
 
 The idea is simple: calculate the offset from the buffer you are overflowing until you reach the return address. This includes the relevant local variables (note they are *word sized) + the base pointer. Then you can modify the return address directly.
